@@ -15,11 +15,11 @@ public class Concessionaria {
 		pre = JOptionPane.showInputDialog("Digite o preço:");
 		prc = Double.parseDouble(pre);
 		
-		car.marca = mar;
-		car.modelo = mod;
-		car.cor = cor;
-		car.preco = prc;
-		
+		car.setMarca(mar);
+		car.setModelo(mod);
+		car.setCor(cor);
+		car.setPreco(prc);
+
 		car.Informa_Automovel();
 	}
 
