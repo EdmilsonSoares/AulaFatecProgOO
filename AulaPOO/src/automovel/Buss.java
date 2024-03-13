@@ -1,4 +1,4 @@
-package Automóvel;
+package automovel;
 
 public class Buss {
 	//Attributes

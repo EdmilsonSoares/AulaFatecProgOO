@@ -1,4 +1,4 @@
-package Automóvel;
+package automovel;
 import javax.swing.JOptionPane;
 
 public class Concessionaria {
