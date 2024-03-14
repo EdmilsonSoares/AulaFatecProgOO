@@ -16,7 +16,7 @@ public class Livraria {
 		
 		case 1: JOptionPane.showMessageDialog(null, "CATEGORIA ROMANCE\n" + 
 				"\n LIVRO: " + livro + 
-				"\n LIVRO: " + ano + 
+				"\n ANO: " + ano + 
 				"\n EDITORA: " + editora + 
 				"\n Autor: " + autor +
 				"\n QUANTIDADE: " + quantidade +
@@ -25,7 +25,7 @@ public class Livraria {
 		
 		case 2: JOptionPane.showMessageDialog(null, "CATEGORIA ESPÍRITA\n" + 
 				"\n LIVRO: " + livro + 
-				"\n LIVRO: " + ano + 
+				"\n ANO: " + ano + 
 				"\n EDITORA: " + editora + 
 				"\n Autor: " + autor +
 				"\n QUANTIDADE: " + quantidade +
@@ -34,7 +34,7 @@ public class Livraria {
 		
 		case 3: JOptionPane.showMessageDialog(null, "CATEGORIA INFORMÁTICA\n" + 
 				"\n LIVRO: " + livro +
-				"\n LIVRO: " + ano + 
+				"\n ANO: " + ano + 
 				"\n EDITORA: " + editora + 
 				"\n Autor: " + autor +
 				"\n QUANTIDADE: " + quantidade +

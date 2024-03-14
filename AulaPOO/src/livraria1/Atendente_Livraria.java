@@ -13,7 +13,7 @@ public class Atendente_Livraria {
 		double h;
 
 		while (f < 1 || f > 3) {
-			JOptionPane.showMessageDialog(null,"Categoria: Digite\n 1 para romance\n 2 para espírita\n 3 para informática");
+			JOptionPane.showMessageDialog(null,"Categoria: Digite\n 1 para romance\n 2 para espírita\n 3 para informática","", JOptionPane.PLAIN_MESSAGE);
 			a = JOptionPane.showInputDialog(null, "Codigo");
 			f = Integer.parseInt(a);
 			if (f < 1 || f > 3)
