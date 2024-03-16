@@ -1,4 +1,5 @@
 package game;
+import javax.swing.JOptionPane;
 
 public class CombatGame {
     public static void main(String[] args) {
@@ -7,8 +8,10 @@ public class CombatGame {
         
 
         persona[0] = Personagem.customizar(persona[0]);
-        System.out.println(persona[0].status());
+        JOptionPane.showMessageDialog(null, persona[0].status(),"Personagem construido",JOptionPane.PLAIN_MESSAGE);
+        
         persona[1] = Personagem.customizar(persona[1]);
+        JOptionPane.showMessageDialog(null, persona[1].status(),"Personagem construido",JOptionPane.PLAIN_MESSAGE);
 
         Combate luta = new Combate();
         int b = (int) (Math.random() * 2);
@@ -24,11 +27,11 @@ public class CombatGame {
         if (persona[1].getVida() > 0 && persona[0].getVida() < 1)
             vencedor = persona[1].getNome();
 
-        System.out.println("O combate terminou com " + vencedor + " sendo o vencedor!!!");
-        System.out.println(persona[0].getNome() + " Vida " + persona[0].getVida());
-        System.out.println(persona[1].getNome() + " Vida " + persona[1].getVida());
-
-       
+        JOptionPane.showMessageDialog(null, "O combate terminou com " + vencedor + " sendo o vencedor!!!\n" + 
+        		persona[0].getNome() + " HP " + persona[0].getVida() + "\n" +
+        		persona[1].getNome() + " HP " + persona[1].getVida(), 
+        		"FIM DE JOGO",JOptionPane.PLAIN_MESSAGE);
+ 
     }
 
     // ===========================================================================================================================

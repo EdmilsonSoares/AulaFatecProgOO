@@ -1,5 +1,5 @@
 package game;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Personagem {
 
@@ -106,39 +106,50 @@ public class Personagem {
     public void setEsq(int esq) {
         this.esq = esq;
     }
-
+    //mostrar estado do personagem
     public String status() {
 
         StringBuilder stb = new StringBuilder();
-
-        stb.append("Nome " + this.getNome());
-        stb.append(" |Vida " + this.getVida());
-        stb.append(" |Ataque " + this.getAtq());
-        stb.append(" |Defesa " + this.getDef());
-        stb.append(" |Esquiva " + this.getEsq());
-        stb.append(" |" + this.getPosicao());
-
+        stb.append("" + this.getNome());
+        stb.append(" HP: " + this.getVida());
+        stb.append("\nATAQUE: " + this.getAtq());
+        stb.append("\nDEFESA: " + this.getDef());
+        stb.append("\nESQUIVA: " + this.getEsq());
+        stb.append("\nAÇÕES: " + this.getAcao());
+        stb.append("\n" + this.getPosicao());
         return stb.toString();
     }
 
     public static Personagem customizar(Personagem persona) {
 
-        String n;
+        String n, valor;
         byte vez = 0;
-        int atq = 0, def = 0, esq = 0, total = 0, op = 0;
-        boolean max = false, min = false;
-        Scanner imput = new Scanner(System.in);
+        int atq = 0, def = 0, esq = 0, total = 0, sub = 0, op = 0;
+        boolean max = false, min = false, ValidInput = false;
 
-        System.out.println("\nCriar personagem, insira o nome do personagem: ");
-        n = imput.nextLine();
+        n = JOptionPane.showInputDialog(null, "CRIAR PERSONAGEM\nInsira o nome do personagem");
+        if(n==null) 
+        	sair();	
+        JOptionPane.showMessageDialog(null,"Voce tem 100 pontos para distribuir entre ataque, defesa e esquiva\n" + 
+        "Nenhum desses atributos pode ficar com menos de 15 pontos","CRIAR PERSONAGEM",JOptionPane.PLAIN_MESSAGE);
 
-        System.out.println("\nVoce tem 100 pontos para distribuir entra ataque, defesa e esquiva.");
-        System.out.println("Nenhum desses atributos pode ficar com menos de 15 pontos.");
 
         do {
-            System.out.printf("\nDigite\n1 - Ajustar o ataque, valor[%d]\n2 - Ajustar a defesa, valor[%d]\n", atq, def);
-            System.out.printf("3 - Ajustar a esquiva, valor[%d]\n", esq);
-            op = verificaInt();
+        	
+        	ValidInput = false;
+            while(! ValidInput) {
+                valor = JOptionPane.showInputDialog(null, "Digite\n1 - Ajustar o ataque: ATQ = " + atq + 
+            			"\n2 - Ajustar a defesa: DEF = " + def + "\n3 - Ajustar a esquiva: ESQ = " + esq );
+                if(valor==null)
+                	sair();
+                try {
+                    op = Integer.parseInt(valor);
+                    ValidInput = true; // Se chegou até aqui, o input é válido
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Digite um número válido");
+                }
+            }
+
 
             switch (op) {
                 case 1:
@@ -154,20 +165,21 @@ public class Personagem {
                     vez++;
                     break;
                 default:
-                    System.out.println("Opção inválida!");
+                	JOptionPane.showMessageDialog(null, "Opção inválida");
                     break;
             }
             total = atq + def + esq;
+            sub = 100 - total;
             if (total != 100 && vez == 3) {
                 vez--;
                 if (total > 100) {
-                    System.out.printf("\nDistribuiu pontos a mais! ataque[%d] + defesa[%d] + esquiva[%d] = %d\n", atq,
-                            def, esq, total);
+                	JOptionPane.showMessageDialog(null, "Distribuiu pontos a mais!\nAtaque " + atq + 
+                			" + Defesa " + def + " + Esquiva " + esq + " = Total " + total);
                     max = true;
                     min = false;
                 } else {
-                    System.out.printf("\nDistribuiu pontos a menos! ataque[%d] + defesa[%d] + esquiva[%d] = %d\n", atq,
-                            def, esq, total);
+                	JOptionPane.showMessageDialog(null, "Faltam " + sub + " pontos para distribuir!\nAtaque " + atq + 
+                			" + Defesa " + def + " + Esquiva " + esq + " = Total " + total);
                     max = false;
                     min = true;
                 }
@@ -179,34 +191,45 @@ public class Personagem {
         return persona;
     }
 
-    private static int verificaInt() {
-        Scanner imput = new Scanner(System.in);
-
-        while (!imput.hasNextInt()) {// impedir caracteres indesejados
-            System.out.println("Dado incorreto");
-            imput.next();// Descartar a entrada inválida
-        }
-        int n = imput.nextInt();
-        imput.nextLine();// remover enter do buffer
-        return n;
-    }
-
     private static int ajustAtrib(boolean max, boolean min, int x) {
         do {
             if (max == true && min == false) {
-                System.out.print("Retire o excesso: ");
-                x -= verificaInt();
+            	JOptionPane.showMessageDialog(null, "Retire o excesso");
+                x -= tratarExcessao();
             } else if (max == false && min == true) {
-                System.out.print("Adicione o que falta: ");
-                x += verificaInt();
+            	JOptionPane.showMessageDialog(null, "Adicione o que falta");
+                x += tratarExcessao();
             } else {
-                System.out.print("Insira o valor: ");
-                x = verificaInt();
+                x = tratarExcessao();
             }
             if (x < 15)
-                System.out.println("Esse atributo não pode ser menor que 15");
+            	JOptionPane.showMessageDialog(null, "Esse atributo não pode ser menor que 15");
         } while (x < 15);
         return x;
+    }
+    
+    private static int tratarExcessao() {
+    	int num=0;
+    	String valor;
+    	boolean ValidInput = false;
+    	
+        while(! ValidInput) {
+            valor = JOptionPane.showInputDialog(null, "Insira o valor");
+            if(valor==null)
+            	sair();
+            try {
+                num = Integer.parseInt(valor);
+                ValidInput = true; // Se chegou até aqui, o input é válido
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Digite um número válido");
+            }
+        }
+    	return num;
+    }
+    
+    private static void sair() {
+    	JOptionPane.showMessageDialog(null,"","SAINDO",JOptionPane.PLAIN_MESSAGE);
+    	System.exit(0); //cancelar e sair
     }
 }
 

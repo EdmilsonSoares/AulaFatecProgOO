@@ -1,243 +1,269 @@
 package game;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Combate {
-    private Personagem p1;
-    private Personagem p2;
-    private boolean validar;
-    private int ramdomico;
+	private Personagem p1;
+	private Personagem p2;
+	private boolean validar;
+	private int ramdomico;
 
-    public Personagem getP1() {
-        return p1;
-    }
+	public Personagem getP1() {
+		return p1;
+	}
 
-    public Personagem getP2() {
-        return p2;
-    }
+	public Personagem getP2() {
+		return p2;
+	}
 
-    public boolean isValidar() {
-        return validar;
-    }
+	public boolean isValidar() {
+		return validar;
+	}
 
-    public int getRamdomico() {
-        return ramdomico;
-    }
+	public int getRamdomico() {
+		return ramdomico;
+	}
 
-    public void setP1(Personagem p1) {
-        this.p1 = p1;
-    }
+	public void setP1(Personagem p1) {
+		this.p1 = p1;
+	}
 
-    public void setP2(Personagem p2) {
-        this.p2 = p2;
-    }
+	public void setP2(Personagem p2) {
+		this.p2 = p2;
+	}
 
-    public void setValidar(boolean validar) {
-        this.validar = validar;
-    }
+	public void setValidar(boolean validar) {
+		this.validar = validar;
+	}
 
-    public void setRamdomico() {
-        this.ramdomico = (int) (Math.random() * 100);// De 0 a 99
-    }
+	public void setRamdomico() {
+		this.ramdomico = (int) (Math.random() * 100);// De 0 a 99
+	}
 
-    // ==================================================================================================================================
-    public boolean marcarCombat(Personagem p1, Personagem p2) {
+// ==================================================================================================================================
+	public void rodada(Personagem p1, Personagem p2) {
+		byte rodada = (byte) 1;
 
-        if ((p1.getVida() == 0) || (p2.getVida() == 0)) {
-            this.setValidar(false);
-            System.out.println("Personagens derrotados (zero vida) não podem participar de combates");
-            System.out.println(p1.status() + " " + p2.status());
-        } else {
-            this.setValidar(true);
-            System.out.println(p1.getNome() + " VS " + p2.getNome());
-        }
-        return validar;
-    }
+		while (p1.getVida() > 0 && p2.getVida() > 0) {//laço do jogo
+			JOptionPane.showMessageDialog(null, "Cada rodada só termina quando todos jogadores\ntiverem esgotado suas ações", rodada + "º Rodada", JOptionPane.PLAIN_MESSAGE);
+			while (p1.getAcao() > 0 || p2.getAcao() > 0) {//laço da rodada
+				if (p1.getAcao() > 0) {//turno do jogador 1
+					JOptionPane.showMessageDialog(null, p1.status() + "\n\n" + p2.status(), "Condição dos Lutadores",JOptionPane.PLAIN_MESSAGE);
+					turnoAtivo(p1, p2);
+					if (p2.getVida() <= 0)
+						break;
+				}
+				if (p2.getAcao() > 0) {//turno do jogador 2
+					JOptionPane.showMessageDialog(null, p1.status() + "\n\n" + p2.status(), "Condição dos Lutadores",JOptionPane.PLAIN_MESSAGE);
+					turnoAtivo(p2, p1);
+					if (p1.getVida() <= 0)
+						break;
+				}
+			}
+			p1.setAcao(5);
+			p2.setAcao(5);
+			rodada++;
+		}
+	}
 
-    // ==================================================================================================================================
-    public void rodada(Personagem p1, Personagem p2) {
-        byte rodada = (byte) 1;
+	// ==================================================================================================================================
+	private int turnoAtivo(Personagem Ativo, Personagem Passivo) {
+		byte op;
+		int result = 0;
 
-        while (p1.getVida() > 0 && p2.getVida() > 0) {
-            System.out.println("\n" + rodada + "º Rodada");
-            while (p1.getAcao() > 0 || p2.getAcao() > 0) {
-                if (p1.getAcao() > 0) {
-                    System.out.println("\nCondição dos lutadores.\n" + p1.status() + "\n" + p2.status());
-                    turnoAtivo(p1, p2);
-                    if (p2.getVida() <= 0)
-                        break;
-                }
-                if (p2.getAcao() > 0) {
-                    System.out.println("\nCondição dos lutadores.\n" + p1.status() + "\n" + p2.status());
-                    turnoAtivo(p2, p1);
-                    if (p1.getVida() <= 0)
-                        break;
-                }
-            }
-            p1.setAcao(5);
-            p2.setAcao(5);
-            rodada++;
-        }
-    }
+		if (Ativo.getAcao() > 0) {
+			JOptionPane.showMessageDialog(null,"1 - Realizar ataque\n2 - Mudar modo de combate\n\n" + 
+					Ativo.getNome() + " Ações: " + Ativo.getAcao() + "\n" + 
+					Passivo.getNome() + " Ações: " + Passivo.getAcao(),
+					Ativo.getNome() + " Escolha sua ação", JOptionPane.PLAIN_MESSAGE);
 
-    // ==================================================================================================================================
-    private int turnoAtivo(Personagem At, Personagem Ps) {
-        byte op;
-        int result = 0;
+			op = verificaByte((byte) 1);
+			Ativo.setAcao(Ativo.getAcao() - 1); // p1 gasta uma ação
 
-        if (At.getAcao() > 0) {
-            System.out.println("===================================================================");
-            System.out.println(At.getNome() + " Escolha sua ação:\n1 - Realizar ataque\n2 - Mudar modo de combate");
-            System.out.println(At.getNome() + " Ações: " + At.getAcao() + " " + Ps.getNome() + " Ações: " + Ps.getAcao());
-            System.out.println("===================================================================");
-            op = verificaByte((byte) 2);
-            At.setAcao(At.getAcao() - 1); // p1 gasta uma ação
+			if (op == 1) { // se p1 escolhe 1 atacar
+				if (Passivo.getAcao() == 0) { // se p2 não tem ações
+					System.out.println(Passivo.getNome() + " não tem ações para esquivar! Passando para defesa...");
+					turnoDefesa(Ativo, Passivo, result);
+				} else { // se p2 tem ações
+					
+					JOptionPane.showMessageDialog(null,"1 - Defender\n2 - Esquivar\n\n" + 
+							Ativo.getNome() + " Ações: " + Ativo.getAcao() + "\n" + 
+							Passivo.getNome() + " Ações: " + Passivo.getAcao(),
+							Passivo.getNome() + " Escolha sua ação", JOptionPane.PLAIN_MESSAGE);
+					
+					op = verificaByte((byte) 2);
+					if (op == 1) { // se p2 escolhe defensa
+						turnoDefesa(Ativo, Passivo, result);
+					} else { // se p2 escolhe esquiva
+						turnoEsquiva(Ativo, Passivo, result);
+					}
+				}
+			} else { // se p1 escolher 2 alterar modo de luta
+				alteraModo(Ativo);
+			}
+			result = 1;
+		} else {// se ativo não tem ação
+			result = 0;
+		}
+		return result;
+	}
 
-            if (op == 1) { // se p1 escolhe atacar
-                if (Ps.getAcao() == 0) { // se p2 não tem ações
-                    System.out.println(Ps.getNome() + " não tem ações para esquivar! Passando para defesa...");
-                    turnoDefesa(At, Ps, result);
-                } else { // se p2 tem ações
-                    System.out.println("===================================================================");
-                    System.out.println(Ps.getNome() + " Escolha sua ação:\n1 - Defender\n2 - Esquivar");
-                    System.out.println(At.getNome() + " Ações: " + At.getAcao() + " " + Ps.getNome() + " Ações: " + Ps.getAcao());
-                    System.out.println("===================================================================");
-                    op = verificaByte((byte) 2);
-                    if (op == 1) { // se p2 escolhe defensa
-                        turnoDefesa(At, Ps, result);
-                    } else { // se p2 escolhe esquiva
-                        turnoEsquiva(At, Ps, result);
-                    }
-                }
-            } else { // se p1 escolher alterar modo de luta
-                alteraModo(At, op, result);
-            }
-            result = 1;
-        } else {
-            result = 0;
-        }
-        return result;
-    }
+	// ==================================================================================================================================
+	private void alteraModo(Personagem At) {
+		int result=0;
+		byte op=0;
 
-    // ==================================================================================================================================
-    private void alteraModo(Personagem At, byte op, int result) {
+		do {
+			op = verificaByte((byte) 3);
+			if (At.getModo() == op)
+				JOptionPane.showMessageDialog(null, "Voce ja está nesse modo escolha outro");
+		} while (At.getModo() == op);
 
-        do {
-            System.out.println("1 - Posição normal\n2 - Posição de Ataque\n3 - Posição de Defesa");
-            op = verificaByte((byte) 3);
-            if (At.getModo() == op)
-                System.out.println("Voce ja está nesse modo escolha outro");
-        } while (At.getModo() == op);
+		switch (op) {
+		case 1:
+			At.setModo(op); // muda para "1" modo normal
+			At.setPosicao("Posição Normal");
+			At.setAtq(At.getAtqbase());
+			At.setDef(At.getDefbase());
+			At.setEsq(At.getEsqbase());
+			break;
+		case 2:
+			At.setModo(op); // muda para "2" modo ataque
+			At.setPosicao("Posição de Ataque");
+			result = (At.getDefbase() + At.getEsqbase()) / 2;
+			At.setAtq(At.getAtqbase() + result);
+			At.setDef(At.getDefbase() / 2);
+			At.setEsq(At.getEsqbase() / 2);
+			// System.out.println(At.status());
+			break;
+		case 3:
+			At.setModo(op); // muda para "3" modo defensivo
+			At.setPosicao("Posição de Defesa");
+			result = (At.getAtqbase() / 2) / 2;
+			At.setDef(At.getDefbase() + result);
+			At.setEsq(At.getEsqbase() + result);
+			At.setAtq(At.getAtqbase() / 2);
+			// System.out.println(At.status());
+			break;
+		}
+	}
 
-        switch (op) {
-            case 1:
-                At.setModo(op); // muda para "1" modo normal
-                At.setPosicao("Posição Normal");
-                At.setAtq(At.getAtqbase());
-                At.setDef(At.getDefbase());
-                At.setEsq(At.getEsqbase());
-                break;
-            case 2:
-                At.setModo(op); // muda para "2" modo ataque
-                At.setPosicao("Posição de Ataque");
-                result = (At.getDefbase() + At.getEsqbase()) / 2;
-                At.setAtq(At.getAtqbase() + result);
-                At.setDef(At.getDefbase() / 2);
-                At.setEsq(At.getEsqbase() / 2);
-                // System.out.println(At.status());
-                break;
-            case 3:
-                At.setModo(op); // muda para "3" modo defensivo
-                At.setPosicao("Posição de Defesa");
-                result = (At.getAtqbase() / 2) / 2;
-                At.setDef(At.getDefbase() + result);
-                At.setEsq(At.getEsqbase() + result);
-                At.setAtq(At.getAtqbase() / 2);
-                // System.out.println(At.status());
-                break;
-        }
-    }
+	// =================================================================================================================================
+	private void turnoDefesa(Personagem Ativo, Personagem Passivo, int result) {
+		int dano = 0;
+		result = Ativo.getAtq() + 50 - Passivo.getDef();
+		setRamdomico();
+		if (getRamdomico() <= 15) {
+			Passivo.setVida(Passivo.getVida() - (Ativo.getAtq() * 2));//dano
+			JOptionPane.showMessageDialog(null, "RESULTADO:\n" + Ativo.getNome() + " obteve um acerto crítico\n" + 
+			"Chance de acerto " + result + "% Valor obtido " + getRamdomico() + "\n" +
+			Ativo.getNome() + " ATQ: " + Ativo.getAtq() + 
+			"\nDano causado = " + (Ativo.getAtq() * 2) );
+			
+		} else if (getRamdomico() <= result) {
+			Passivo.setVida(Passivo.getVida() - Ativo.getAtq());//dano
+			JOptionPane.showMessageDialog(null, "RESULTADO:\n" +  Ativo.getNome() + " acertou o golpe\n" + 
+			"Chance de acerto " + result + "% Valor obtido " + getRamdomico() + "\n" +
+			Ativo.getNome() + " ATQ: " + Ativo.getAtq() + 
+			"\nDano causado = " + Ativo.getAtq() );
 
-    // =================================================================================================================================
-    private void turnoDefesa(Personagem At, Personagem Ps, int result) {
-        int dano = 0;
-        result = At.getAtq() + 50 - Ps.getDef();
-        setRamdomico();
-        if (getRamdomico() <= 15) {
-            System.out.print("\nRESULTADO: " + At.getNome() + " obteve um acerto crítico.");
-            System.out.println(" Porcentagem " + result + "% Valor obtido " + getRamdomico() + "%");
-            Ps.setVida(Ps.getVida() - (At.getAtq() * 2));
-            System.out.println("Dano = " + (At.getAtq() * 2));
+		} else {
+			dano = Ativo.getAtq() - Passivo.getDef();//cálculo da defesa
+			if (dano <= 0) {
+				JOptionPane.showMessageDialog(null, "RESULTADO:\n" + Ativo.getNome() + 
+						" teve o golpe bloqueado e o dano zerado pela defesa do inimigo" + 
+						"\nChance de acerto " + result + "% Valor obtido " + getRamdomico() + "\n" +
+						Ativo.getNome() + " ATQ: " + Ativo.getAtq() + "\n" +
+						Passivo.getNome() + " DEF: " + Passivo.getDef());
+				
+			} else {
+				Passivo.setVida(Passivo.getVida() - dano);//dano
+				JOptionPane.showMessageDialog(null, "RESULTADO:\n" + Ativo.getNome() + 
+						" teve o golpe bloqueado e o dano reduzido pela defesa do inimigo" + 
+						"\nChance de acerto " + result + "% Valor obtido " + getRamdomico() + "\n" +
+						Ativo.getNome() + " ATQ: " + Ativo.getAtq() + "\n" +
+						Passivo.getNome() + " DEF: " + Passivo.getDef() +
+						"\nDano causado = " + dano);
+			}
+		}
+	}
 
-        } else if (getRamdomico() <= result) {
-            System.out.print("\nRESULTADO: " + At.getNome() + " acertou o golpe.");
-            System.out.println(" Porcentagem " + result + "% Valor obtido " + getRamdomico() + "%");
-            Ps.setVida(Ps.getVida() - At.getAtq());
-            System.out.println("Dano = " + At.getAtq());
+	// ==================================================================================================================================
+	private void turnoEsquiva(Personagem At, Personagem Ps, int result) {
+		Ps.setAcao(Ps.getAcao() - 1); // p2 gasta uma ação
+		result = At.getAtq() + 50 - Ps.getEsq();
+		setRamdomico();
+		if (getRamdomico() <= 15) {
+			System.out.print("\nRESULTADO: " + At.getNome() + " obteve um acerto crítico.");
+			System.out.println(" Porcentagem de ataque " + result + "% Valor obtido " + getRamdomico() + "%");
+			Ps.setVida(Ps.getVida() - (At.getAtq() * 2));
+			System.out.println("Dano = " + (At.getAtq() * 2));
 
-        } else {
-            System.out.print("\nRESULTADO: " + At.getNome() + " teve o golpe bloqueado.");
-            System.out.println(" Porcentagem " + result + "% Valor obtido " + getRamdomico() + "%");
-            dano = At.getAtq() - Ps.getDef();
-            if (dano <= 0) {
-                System.out.println(Ps.getNome() + " conseguiu bloquear completamente o ataque.");
-            } else {
-                System.out.println("Dano = " + dano);
-                Ps.setVida(Ps.getVida() - dano);
-            }
-        }
-    }
+		} else if (getRamdomico() <= result) {
+			System.out.print("\nRESULTADO: " + At.getNome() + " acertou o golpe.");
+			System.out.println(" Porcentagem de ataque " + result + "% Valor obtido " + getRamdomico() + "%");
+			Ps.setVida(Ps.getVida() - At.getAtq());
+			System.out.println("Dano = " + At.getAtq());
 
-    // ==================================================================================================================================
-    private void turnoEsquiva(Personagem At, Personagem Ps, int result) {
-        Ps.setAcao(Ps.getAcao() - 1); // p2 gasta uma ação
-        result = At.getAtq() + 50 - Ps.getEsq();
-        setRamdomico();
-        if (getRamdomico() <= 15) {
-            System.out.print("\nRESULTADO: " + At.getNome() + " obteve um acerto crítico.");
-            System.out.println(" Porcentagem de ataque " + result + "% Valor obtido " + getRamdomico() + "%");
-            Ps.setVida(Ps.getVida() - (At.getAtq() * 2));
-            System.out.println("Dano = " + (At.getAtq() * 2));
+		} else {
+			System.out.print("\nRESULTADO: " + Ps.getNome() + " esquivou e não sofre dano.");
+			System.out.println(" Porcentagem de ataque " + result + "% Valor obtido " + getRamdomico() + "%");
+		}
+	}
 
-        } else if (getRamdomico() <= result) {
-            System.out.print("\nRESULTADO: " + At.getNome() + " acertou o golpe.");
-            System.out.println(" Porcentagem de ataque " + result + "% Valor obtido " + getRamdomico() + "%");
-            Ps.setVida(Ps.getVida() - At.getAtq());
-            System.out.println("Dano = " + At.getAtq());
+	// ==================================================================================================================================
+	private static byte verificaByte(byte x) {
+		
+		boolean ValidInput = false;
+		String valor;
+		byte op = 0;
 
-        } else {
-            System.out.print("\nRESULTADO: " + Ps.getNome() + " esquivou e não sofre dano.");
-            System.out.println(" Porcentagem de ataque " + result + "% Valor obtido " + getRamdomico() + "%");
-        }
-    }
-
-    // ==================================================================================================================================
-    private static byte verificaByte(byte x) {
-        Scanner imput = new Scanner(System.in);
-        byte n = 0;
-        if (x == 2) {// aceita somente 1 e 2
-            while (n < 1 || n > 2) {
-                while (!imput.hasNextByte()) {// impedir caracteres indesejados
-                    System.out.println("Dado incorreto");
-                    imput.next();// Descartar a entrada inválida
-                }
-                n = imput.nextByte();
-                imput.nextLine();// remover enter do buffer
-                if (n < 1 || n > 2)
-                    System.out.println("Essa opção não existe digite novamente");
-            }
-        } else if (x == 3) {// aceita somente 1, 2 e 3
-            while (n < 1 || n > 3) {
-                while (!imput.hasNextByte()) {// impedir caracteres indesejados
-                    System.out.println("Dado incorreto");
-                    imput.next();// Descartar a entrada inválida
-                }
-                n = imput.nextByte();
-                imput.nextLine();// remover enter do buffer
-                if (n < 1 || n > 3)
-                    System.out.println("Essa opção não existe digite novamente");
-            }
-        }
-        return n;
-    }
+		if(x == 1) {
+			while (!ValidInput) {
+				valor = JOptionPane.showInputDialog(null, "1 - Realizar ataque\n2 - Mudar modo de combate");
+				if (valor == null)
+					System.exit(0);
+				try {
+					op = Byte.parseByte(valor);
+					if (op < 1 || op > 2)
+						JOptionPane.showMessageDialog(null, "Essa opção não existe");
+					else
+						ValidInput = true;
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Digite um número válido");
+				}
+			}	
+		}else if (x == 2) {
+			while (!ValidInput) {
+				valor = JOptionPane.showInputDialog(null, "1 - Defender\n2 - Esquivar");
+				if (valor == null)
+					System.exit(0);
+				try {
+					op = Byte.parseByte(valor);
+					if (op < 1 || op > 2)
+						JOptionPane.showMessageDialog(null, "Essa opção não existe");
+					else
+						ValidInput = true;
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Digite um número válido");
+				}
+			}
+		} else if (x == 3) {
+			while (!ValidInput) {
+				valor = JOptionPane.showInputDialog(null, "1 - Posição normal\n2 - Posição de Ataque\n3 - Posição de Defesa");
+				if (valor == null)
+					System.exit(0);
+				try {
+					op = Byte.parseByte(valor);
+					if (op < 1 || op > 3)
+						JOptionPane.showMessageDialog(null, "Essa opção não existe");
+					else
+						ValidInput = true;
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Digite um número válido");
+				}
+			}			
+		}
+		return op;
+	}
 
 }
