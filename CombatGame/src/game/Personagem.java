@@ -15,6 +15,9 @@ public class Personagem {
     private int def;// pode ser alterado
     private int esq;// pode ser alterado
 
+    public Personagem() {
+    }
+    
     public Personagem(String nom, int atq, int def, int esq) {
         this.setNome(nom);
         this.setVida(200);
@@ -146,7 +149,7 @@ public class Personagem {
                     op = Integer.parseInt(valor);
                     ValidInput = true; // Se chegou até aqui, o input é válido
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Digite um número válido");
+                    JOptionPane.showMessageDialog(null, "Digite um número válido", "ERRO", JOptionPane.ERROR_MESSAGE);
                 }
             }
 
@@ -165,7 +168,7 @@ public class Personagem {
                     vez++;
                     break;
                 default:
-                	JOptionPane.showMessageDialog(null, "Opção inválida");
+                	JOptionPane.showMessageDialog(null, "Opção Inválida", "RECUSADO", JOptionPane.WARNING_MESSAGE);
                     break;
             }
             total = atq + def + esq;
@@ -174,12 +177,12 @@ public class Personagem {
                 vez--;
                 if (total > 100) {
                 	JOptionPane.showMessageDialog(null, "Distribuiu pontos a mais!\nAtaque " + atq + 
-                			" + Defesa " + def + " + Esquiva " + esq + " = Total " + total);
+                			" + Defesa " + def + " + Esquiva " + esq + " = Total " + total, "RECUSADO", JOptionPane.WARNING_MESSAGE);
                     max = true;
                     min = false;
                 } else {
                 	JOptionPane.showMessageDialog(null, "Faltam " + sub + " pontos para distribuir!\nAtaque " + atq + 
-                			" + Defesa " + def + " + Esquiva " + esq + " = Total " + total);
+                			" + Defesa " + def + " + Esquiva " + esq + " = Total " + total, "CUSTOMIZAR", JOptionPane.WARNING_MESSAGE);
                     max = false;
                     min = true;
                 }
@@ -203,7 +206,7 @@ public class Personagem {
                 x = tratarExcessao();
             }
             if (x < 15)
-            	JOptionPane.showMessageDialog(null, "Esse atributo não pode ser menor que 15");
+            	JOptionPane.showMessageDialog(null, "Esse atributo não pode ser menor que 15", "RECUSADO", JOptionPane.WARNING_MESSAGE);
         } while (x < 15);
         return x;
     }
@@ -221,7 +224,7 @@ public class Personagem {
                 num = Integer.parseInt(valor);
                 ValidInput = true; // Se chegou até aqui, o input é válido
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Digite um número válido");
+                JOptionPane.showMessageDialog(null, "Digite um número válido", "ERRO", JOptionPane.ERROR_MESSAGE);
             }
         }
     	return num;
