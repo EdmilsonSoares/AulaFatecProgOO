@@ -19,10 +19,11 @@ public class Informa_dados extends JFrame implements ActionListener{
 		
 
 		JFrame janela = new Informa_dados();
-		janela.show();
+		janela.setVisible(true);
 		WindowListener x = new WindowAdapter() {
 			public void WindowClosing(WindowEvent fecha) {
 				System.exit(0);
+				//System.out.println("\nCAVALO\n");
 			}	
 		};
 		janela.addWindowListener(x);
@@ -30,23 +31,23 @@ public class Informa_dados extends JFrame implements ActionListener{
 	
 	Informa_dados(){
 		setTitle("PROTÓTIPO DE ENGENHARIA DE SOFTWARE III");
-		setSize(800,400);
+		setSize(300,200);
 		
 		
-		getContentPane().setBackground (new Color (200, 200, 200)); 
+		getContentPane().setBackground (new Color (100, 200, 200)); 
 		getContentPane().setLayout (new GridLayout(6,2));
 
 		L1= new JLabel("Identificação");
-		L1.setForeground(Color.green);
+		L1.setForeground(Color.blue);
 		L1.setFont(new Font("", Font.BOLD, 14));
 		L2= new JLabel("CPF"); 
-		L2.setForeground(Color.green);
+		L2.setForeground(Color.blue);
 		L2.setFont(new Font("", Font.BOLD, 14));
 		L3= new JLabel("CNPJ");
-		L3.setForeground(Color.green); 
-		L3.setFont(new Font(" ", Font.BOLD, 14));
+		L3.setForeground(Color.red); 
+		L3.setFont(new Font("", Font.BOLD, 14));
 		L4= new JLabel("Cartão"); 
-		L4.setForeground(Color.green);
+		L4.setForeground(Color.red);
 		L4.setFont(new Font("", Font.BOLD,14));
 		L5 = new JLabel("");
 		L5.setForeground(Color.gray);
@@ -64,8 +65,8 @@ public class Informa_dados extends JFrame implements ActionListener{
 		T4. setForeground(Color.black);
 		C1= new JCheckBox("Pessoa Fisica");
 		C2= new JCheckBox("Pessoa Jurídica");
-		B1= new JButton("leitura de dados");
-		B1.setBackground(Color.white); 
+		B1= new JButton("Clica aqui cabeção");
+		B1.setBackground(Color.green); 
 		B1.setForeground(Color.blue);
 		B1.addActionListener(this);
 		
