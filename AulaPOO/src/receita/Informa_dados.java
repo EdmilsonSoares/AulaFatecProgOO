@@ -21,18 +21,18 @@ public class Informa_dados extends JFrame implements ActionListener{
 		JFrame janela = new Informa_dados();
 		janela.setVisible(true);
 		WindowListener x = new WindowAdapter() {
-			public void WindowClosing(WindowEvent fecha) {
+			
+			public void WindowClosing(WindowEvent e) {
 				System.exit(0);
-				//System.out.println("\nCAVALO\n");
 			}	
 		};
 		janela.addWindowListener(x);
 	}
 	
-	Informa_dados(){
+	public Informa_dados(){
 		setTitle("PROTÓTIPO DE ENGENHARIA DE SOFTWARE III");
 		setSize(300,200);
-		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		getContentPane().setBackground (new Color (100, 200, 200)); 
 		getContentPane().setLayout (new GridLayout(6,2));
