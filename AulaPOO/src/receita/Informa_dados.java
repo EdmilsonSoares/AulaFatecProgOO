@@ -17,21 +17,13 @@ public class Informa_dados extends JFrame implements ActionListener{
 
 	public static void main(String[] args) {
 		
-
 		JFrame janela = new Informa_dados();
 		janela.setVisible(true);
-		WindowListener x = new WindowAdapter() {
-			
-			public void WindowClosing(WindowEvent e) {
-				System.exit(0);
-			}	
-		};
-		janela.addWindowListener(x);
 	}
 	
 	public Informa_dados(){
 		setTitle("PROTÓTIPO DE ENGENHARIA DE SOFTWARE III");
-		setSize(300,200);
+		setSize(450,200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		getContentPane().setBackground (new Color (100, 200, 200)); 
@@ -65,7 +57,7 @@ public class Informa_dados extends JFrame implements ActionListener{
 		T4. setForeground(Color.black);
 		C1= new JCheckBox("Pessoa Fisica");
 		C2= new JCheckBox("Pessoa Jurídica");
-		B1= new JButton("Clica aqui cabeção");
+		B1= new JButton("Leitura de dados");
 		B1.setBackground(Color.green); 
 		B1.setForeground(Color.blue);
 		B1.addActionListener(this);

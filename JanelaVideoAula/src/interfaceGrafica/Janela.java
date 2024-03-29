@@ -49,15 +49,15 @@ public class Janela extends JFrame implements ActionListener{
 		botao1.addActionListener(this);
 		botao1.setFont(new Font("", Font.BOLD, 14));
 		botao1.setForeground(Color.BLACK);
-		botao1.setBackground(cor);
+		//botao1.setBackground(cor);
 		botao2.addActionListener(this);
 		botao2.setFont(new Font("", Font.BOLD, 14));
 		botao2.setForeground(Color.BLACK);
-		botao2.setBackground(cor);
+		//botao2.setBackground(cor);
 		botao3.addActionListener(this);
 		botao3.setFont(new Font("", Font.BOLD, 14));
 		botao3.setForeground(Color.BLACK);
-		botao3.setBackground(cor);
+		//botao3.setBackground(cor);
 		grupo.add(rad1);
 		grupo.add(rad2);
 		//rad1.setBounds(300,250,50,50);
