@@ -11,17 +11,20 @@ public class Escrever {
 	
 	public int inClasse(){
 		int r = 0;
-		String ident = "";
+		String identN = "";
+		String identB = "";
 		
-		ident = JOptionPane.showInputDialog(null, "Digite o nome");
-		if(ident == null) {
+		identN = JOptionPane.showInputDialog(null, "Digite o nome");
+		identB = JOptionPane.showInputDialog(null, "Digite o nome de bruxo");
+		if(identN == null || identB == null) {
 			JOptionPane.showMessageDialog(null, "Cadastro cancelado", "RECUSADO", JOptionPane.WARNING_MESSAGE);
-		}else if(ident.isEmpty()) {
+		}else if(identN.isEmpty() || identB.isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Cadastro cancelado", "RECUSADO", JOptionPane.WARNING_MESSAGE);
 		}else {
-			reg.setNome(ident);
-			ident = gerar.getRandom();
-			reg.setId(ident);
+			reg.setNome(identN);
+			reg.setBruxo(identB);
+			identN = gerar.getRandom();
+			reg.setId(identN);
 			r=1;
 		}
 		return r;
@@ -30,19 +33,20 @@ public class Escrever {
 	public void fimArquivo() {
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
-				bw.write(reg.getNome() + " ID: " + reg.getId() + "\n");
+				bw.write(reg.getNome() + " ID: " + reg.getId() + " Bruxo: " + reg.getBruxo() + "\n");
 				//bw.newLine();	
 		} catch (IOException e){
 			JOptionPane.showMessageDialog(null, e.getMessage() + "\nSaindo...", "ERRO", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);	
 		}
 	}
-	public void primeiroContato(String nome, String ID) {
+	public void primeiroContato(String nome, String ID, String bruxo) {
 		reg.setNome(nome);
 		reg.setId(ID);
+		reg.setBruxo(bruxo);
 		
 		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
-				bw.write(reg.getNome() + " ID: " + reg.getId() + "\n");
+				bw.write(reg.getNome() + " ID: " + reg.getId() + " Bruxo: " + reg.getBruxo() + "\n");
 				//bw.newLine();	
 		} catch (IOException e){
 			JOptionPane.showMessageDialog(null, e.getMessage() + "\nSaindo...", "ERRO", JOptionPane.ERROR_MESSAGE);

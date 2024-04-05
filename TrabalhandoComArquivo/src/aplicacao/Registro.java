@@ -4,7 +4,14 @@ public class Registro {
 	
 	private String nome;
 	private String id;
+	private String bruxo;
 	
+	public String getBruxo() {
+		return bruxo;
+	}
+	public void setBruxo(String bruxo) {
+		this.bruxo = bruxo;
+	}
 	public String getNome() {
 		return nome;
 	}

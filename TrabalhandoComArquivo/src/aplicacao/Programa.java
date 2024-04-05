@@ -12,11 +12,12 @@ public class Programa {
 		int opcao=0, r=0;
 		
 		if(ler.allArquivo() == 0) {
-			registro.setNome("RED");
+			registro.setNome("Edmilson");
 			registro.setId(gerar.getRandom());
-			escrever.primeiroContato(registro.getNome(), registro.getId());
-			JOptionPane.showMessageDialog(null, "Nome de bruxo: " + registro.getNome() 
-			+ "\nID: " + registro.getId(), "NOVO BRUXO", JOptionPane.PLAIN_MESSAGE);
+			registro.setBruxo("RED");
+			escrever.primeiroContato(registro.getNome(), registro.getId(), registro.getBruxo());
+			JOptionPane.showMessageDialog(null, "Nome : " + registro.getNome() 
+			+ "\nID: " + registro.getId() + "\nBruxo: " + registro.getBruxo(), "NOVO BRUXO", JOptionPane.PLAIN_MESSAGE);
 		}
 		
 		
