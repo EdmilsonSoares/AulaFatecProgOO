@@ -7,14 +7,17 @@ import javax.swing.JOptionPane;
 
 public class Ler {
 	
-	File file = new File("D:/texto2.txt");
+	File file = new File("D:/lista_de_bruxo.txt");
 	Scanner sc = null;
+	private int r=0;
 	
-	public void allArquivo() {
+	public int allArquivo() {
+		r = 0;
 		try {
 			sc = new Scanner(file);
 			while(sc.hasNextLine()) {
 				System.out.println(sc.nextLine());
+				r=1;
 			}
 		}catch(IOException e){
 			JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -23,6 +26,7 @@ public class Ler {
 				sc.close();
 			}
 		}
+		return r;
 	}
 	
 }

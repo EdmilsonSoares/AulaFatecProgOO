@@ -2,7 +2,6 @@ package aplicacao;
 import javax.swing.JOptionPane;
 
 public class Check {
-	
 	private String op = "";
 	private int opcao = 0;
 	private boolean valid = false;
@@ -10,7 +9,7 @@ public class Check {
 	public int inputOpcao () {
 		valid = false;
 		while(! valid) {
-            op = JOptionPane.showInputDialog(null, "Digite\n 1 cadastrar novo registro\n 2 mostrar todos registros\n 3 editar registro\n 4 apagar registro\n 0 sair");
+            op = JOptionPane.showInputDialog(null, "Digite\n 1 cadastrar novo bruxo\n 2 mostrar lista de bruxos\n 3 editar bruxo\n 4 apagar bruxo\n 0 sair");
             if(op==null)
             	System.exit(0);
             try {

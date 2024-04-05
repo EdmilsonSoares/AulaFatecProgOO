@@ -4,10 +4,21 @@ import javax.swing.JOptionPane;
 public class Programa {
 
 	public static void main(String[] args) {
-		Check check = new Check();
+		Registro registro = new Registro();
 		Escrever escrever = new Escrever();
 		Ler ler = new Ler();
+		Check check = new Check();
+		Gerar gerar = new Gerar();
 		int opcao=0, r=0;
+		
+		if(ler.allArquivo() == 0) {
+			registro.setNome("RED");
+			registro.setId(gerar.getRandom());
+			escrever.primeiroContato(registro.getNome(), registro.getId());
+			JOptionPane.showMessageDialog(null, "Nome de bruxo: " + registro.getNome() 
+			+ "\nID: " + registro.getId(), "NOVO BRUXO", JOptionPane.PLAIN_MESSAGE);
+		}
+		
 		
 		do {
 			opcao = check.inputOpcao();
