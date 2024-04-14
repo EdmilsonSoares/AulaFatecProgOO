@@ -24,7 +24,7 @@ public class Programa {
 		do {
 			opcao = check.inputOpcao();
 			switch(opcao) {
-			case 1:// Cadastrar
+			case 1://Cadastrar
 				r = escrever.inClasse();
 				if(r == 1)
 					escrever.fimArquivo();

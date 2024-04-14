@@ -1,13 +1,15 @@
 package aplicacao;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class Escrever {
-	String path = "D:/lista_de_bruxo.txt";
 	Registro reg = new Registro();
 	Gerar gerar = new Gerar();
+	File file = new File("lista.txt");
+	
 	
 	public int inClasse(){
 		int r = 0;
@@ -32,9 +34,13 @@ public class Escrever {
 	
 	public void fimArquivo() {
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
-				bw.write(reg.getNome() + " ID: " + reg.getId() + " Bruxo: " + reg.getBruxo() + "\n");
-				//bw.newLine();	
+		try{
+			FileWriter fw = new FileWriter(file, true);//não passa daqui se houver erro
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(reg.getNome() + " ID: " + reg.getId() + " Bruxo: " + reg.getBruxo());
+			bw.newLine();
+			bw.close();
+					
 		} catch (IOException e){
 			JOptionPane.showMessageDialog(null, e.getMessage() + "\nSaindo...", "ERRO", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);	
@@ -45,9 +51,12 @@ public class Escrever {
 		reg.setId(ID);
 		reg.setBruxo(bruxo);
 		
-		try(BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))){
-				bw.write(reg.getNome() + " ID: " + reg.getId() + " Bruxo: " + reg.getBruxo() + "\n");
-				//bw.newLine();	
+		try{
+			FileWriter fw = new FileWriter(file, true);//não passa daqui se houver erro
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(reg.getNome() + " ID: " + reg.getId() + " Bruxo: " + reg.getBruxo());
+			bw.newLine();
+			bw.close();
 		} catch (IOException e){
 			JOptionPane.showMessageDialog(null, e.getMessage() + "\nSaindo...", "ERRO", JOptionPane.ERROR_MESSAGE);
 			System.exit(0);	

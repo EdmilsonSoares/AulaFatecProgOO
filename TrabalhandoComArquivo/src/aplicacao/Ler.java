@@ -7,7 +7,7 @@ import javax.swing.JOptionPane;
 
 public class Ler {
 	
-	File file = new File("D:/lista_de_bruxo.txt");
+	File file = new File("lista.txt");
 	Scanner sc = null;
 	private int r=0;
 	
