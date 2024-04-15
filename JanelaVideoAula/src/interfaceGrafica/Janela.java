@@ -84,6 +84,7 @@ public class Janela extends JFrame implements ActionListener{
 		//bt = Integer.parseInt(e.getActionCommand());
 		if(e.getSource() == botao1) {
 			cx1 = caixa1.getText();
+			caixa1.setText("");
 			JOptionPane.showMessageDialog(null, cx1, "Apertou o botão 1", JOptionPane.PLAIN_MESSAGE);
 		}else if(e.getSource() == botao2) {
 			if(rad1.isSelected() == true) 
@@ -100,14 +101,5 @@ public class Janela extends JFrame implements ActionListener{
 				System.exit(0);							
 		}
 	}
-
-	public static void main(String[] args) {
-		new Janela();
-
-	}
-
-
-	
-
 
 }
