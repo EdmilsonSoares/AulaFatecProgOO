@@ -128,16 +128,15 @@ public class Janela extends JFrame implements ActionListener{
 			if(nome.isEmpty() || dia.isEmpty() || mes.isEmpty() || ano.isEmpty()) {
 				JOptionPane.showMessageDialog(null,"Dados ausentes", "ERRO", JOptionPane.ERROR_MESSAGE);
 			}else {
-				//System.out.println(nome + "\n" + telefone + "\n" + dia + "\\" + mes + "\\" + ano);
 				reg.setNome(nome);
 				reg.setTelefone(telefone);
-				if((num = excessoes(dia)) != -1) {
+				if((num = excecoes(dia)) != -1) {
 					reg.setDia(num);
 				}else {erro += 1;}
-				if((num = excessoes(mes)) != -1) {
+				if((num = excecoes(mes)) != -1) {
 					reg.setMes(num);
 				}else {erro += 1;}	
-				if((num = excessoes(ano)) != -1) {
+				if((num = excecoes(ano)) != -1) {
 					reg.setAno(num);
 				}else {erro += 1;}
 				if(erro == 0) {
@@ -179,7 +178,7 @@ public class Janela extends JFrame implements ActionListener{
 		}	
 	}//fim actionPerformed
 	
-	private int excessoes(String data) {
+	private int excecoes(String data) {
 		int num = -1;
 		 try {
              num = Integer.parseInt(data);
