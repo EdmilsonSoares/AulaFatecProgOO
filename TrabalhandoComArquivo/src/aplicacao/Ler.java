@@ -11,7 +11,7 @@ public class Ler {
 	Scanner sc = null;
 	private int r=0;
 	
-	public int allArquivo() {
+	public int allArquivo() {//ler com classe scanner
 		r = 0;
 		try {
 			sc = new Scanner(file);
