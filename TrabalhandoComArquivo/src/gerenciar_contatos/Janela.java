@@ -17,11 +17,6 @@ import javax.swing.SwingConstants;
 
 public class Janela extends JFrame implements ActionListener{
 	
-	public static void main(String[] args) {
-		JFrame janela = new Janela();
-		
-	
-	}
 	
 	JLabel texto1 = new JLabel("Nome");
 	JLabel texto2 = new JLabel("Telefone");
