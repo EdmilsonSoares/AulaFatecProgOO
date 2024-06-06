@@ -1,4 +1,4 @@
-package automovel;
+package aula02_Automovel;
 import javax.swing.JOptionPane;
 
 public class Concessionaria {
@@ -21,6 +21,7 @@ public class Concessionaria {
 		car.setPreco(prc);
 
 		car.Informa_Automovel();
+		System.out.println(car.retorno());
 		
 	}
 

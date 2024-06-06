@@ -1,4 +1,4 @@
-package contribuinte;
+package aula03_Contribuinte;
 import javax.swing.JOptionPane;
 
 public class Informa_Dados {

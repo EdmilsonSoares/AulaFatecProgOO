@@ -1,8 +1,8 @@
-package encapsulamento_1;
+package aula03_Encapsulamento1;
 
 public class Acesso_Numeros {
 
-	int a;
+	int a;//quando não declarado torna-se protected, neste caso a é protected
 	public int b;
 	private int c;
 	protected int d;

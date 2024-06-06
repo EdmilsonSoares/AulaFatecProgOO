@@ -1,5 +1,4 @@
-package livraria1;
-
+package aula02_Livraria;
 import javax.swing.JOptionPane;
 
 public class Atendente_Livraria {

@@ -1,4 +1,4 @@
-package automovel;
+package aula02_Automovel;
 import javax.swing.JOptionPane;
 
 public class Carro {
@@ -39,6 +39,9 @@ public class Carro {
 	public void Informa_Automovel(){		
 		JOptionPane.showMessageDialog(null, "Marca: " + this.getMarca() + "\nModelo: " + this.getModelo() +
 				"\nCor: " + this.getCor() + "\nPreço: R$" + this.getPreco(),"", JOptionPane.PLAIN_MESSAGE);
+	}
+	public String retorno() {
+		return "Marca " + this.getMarca() + "\nModelo " + this.getModelo() + "\nCor " + this.getCor() + "\nPreço " + this.getPreco();
 	}
 }
 

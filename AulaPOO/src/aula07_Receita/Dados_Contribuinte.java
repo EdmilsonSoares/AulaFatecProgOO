@@ -1,4 +1,4 @@
-package receita;
+package aula07_Receita;
 
 public class Dados_Contribuinte {
 	private String nome;
