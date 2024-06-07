@@ -1,4 +1,4 @@
-package aula09_Herança;
+package aula09_Heranca;
 import javax.swing.JOptionPane;
 
 public class ClasseMain {

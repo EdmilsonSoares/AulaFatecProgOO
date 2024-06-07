@@ -1,4 +1,4 @@
-package aula08_Herança;
+package aula08_Heranca;
 
 public class ClasseFilha extends ClassePai{
 	
