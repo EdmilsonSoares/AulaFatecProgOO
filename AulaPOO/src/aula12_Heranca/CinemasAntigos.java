@@ -10,9 +10,15 @@ public class CinemasAntigos extends CinemaDeSantos{
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 	
+	//sobrecarga de métodos
+	public String salas(String A) {
+		return A;
+	}
+	public String salas(String A, String B) {
+		return A + " e " + B;
+	}
 }

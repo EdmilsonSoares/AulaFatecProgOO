@@ -6,5 +6,4 @@ public class CineCaicara extends CinemasAntigos{
 		super(antigo);
 	}
 	
-
 }
