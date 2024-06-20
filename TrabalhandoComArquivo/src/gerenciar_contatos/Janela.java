@@ -17,6 +17,11 @@ import javax.swing.SwingConstants;
 
 public class Janela extends JFrame implements ActionListener{
 	
+	public static void main(String[] args) {
+		JFrame janela = new Janela();
+		//janela.setVisible(true);
+
+	}
 	
 	JLabel texto1 = new JLabel("Nome");
 	JLabel texto2 = new JLabel("Telefone");
@@ -48,7 +53,7 @@ public class Janela extends JFrame implements ActionListener{
 		texto1.setFont(new Font("", Font.BOLD, 12));//nome
 		texto1.setHorizontalAlignment(SwingConstants.LEFT);
 		texto1.setForeground(Color.black);
-		texto2.setFont(new Font("", Font.BOLD, 12));//tele
+		texto2.setFont(new Font("", Font.BOLD, 12));//telefone
 		texto2.setHorizontalAlignment(SwingConstants.LEFT);
 		texto2.setForeground(Color.black);
 		texto3.setFont(new Font("", Font.BOLD, 12));//dia
@@ -62,7 +67,7 @@ public class Janela extends JFrame implements ActionListener{
 		texto5.setForeground(Color.black);
 		
 		caixa1.setPreferredSize(new Dimension(258, 20));//nome
-		caixa2.setPreferredSize(new Dimension(242, 20));//tele
+		caixa2.setPreferredSize(new Dimension(242, 20));//telefone
 		caixa3.setPreferredSize(new Dimension(27, 20));//dia
 		caixa4.setPreferredSize(new Dimension(27, 20));//mes
 		caixa5.setPreferredSize(new Dimension(50, 20));//ano
@@ -183,5 +188,4 @@ public class Janela extends JFrame implements ActionListener{
 		return num;
 	}
 	
-
 }

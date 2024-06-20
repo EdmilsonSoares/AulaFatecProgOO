@@ -8,10 +8,10 @@ public class StartCombat {
         
         
         //persona[0].customizar(persona[0]);
-        persona[0] = Personagem.customizar(persona[0]);//não posso fazer essa atribuição se não mudar o customizar para static
+        persona[0] = Personagem.customizar();//não posso fazer essa atribuição se não mudar o customizar para static
         JOptionPane.showMessageDialog(null, persona[0].status(),"Personagem construido",JOptionPane.PLAIN_MESSAGE);
         
-        persona[1] = Personagem.customizar(persona[1]);//não posso fazer essa atribuição se não mudar o customizar para static
+        persona[1] = Personagem.customizar();//não posso fazer essa atribuição se não mudar o customizar para static
         JOptionPane.showMessageDialog(null, persona[1].status(),"Personagem construido",JOptionPane.PLAIN_MESSAGE);
 
         Combate luta = new Combate();

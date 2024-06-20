@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
-
 import javax.swing.JOptionPane;
 
 public class LerArqui {
-	private File file = new File("lista.txt");
+	private File file = new File("lista.txt");//caminho da lista
 	private byte[] bytes = new byte[50];
 	private int separador = 6, sizeregistro = 50;
+	ListaContato janela = new ListaContato();
 	
 	public void allArquivo() {
 		int cont = 0;
@@ -23,12 +23,14 @@ public class LerArqui {
 				if(bytes[0] != 42) {
 					registro = new String(bytes, StandardCharsets.UTF_8);
 					vreg = registro.split("_", separador);
-					System.out.println("Nome: "+vreg[0]+"  Telefone: "+vreg[1]+"  Nascimento: " +vreg[2]+"/"+vreg[3]+"/"+vreg[4]);
+					//System.out.println("Nome: "+vreg[0]+"  Telefone: "+vreg[1]+"  Nascimento: " +vreg[2]+"/"+vreg[3]+"/"+vreg[4]);
+					janela.adiciona("Nome: "+vreg[0]+"  Telefone: "+vreg[1]+"  Nascimento: " +vreg[2]+"/"+vreg[3]+"/"+vreg[4]);
 				}
 				cont++;
 				rf.seek(cont * sizeregistro);
 			}
 			rf.close();
+			janela.exibir();
 		}catch(IOException e){
 			JOptionPane.showMessageDialog(null, e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
 		}

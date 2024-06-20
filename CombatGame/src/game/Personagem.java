@@ -123,7 +123,7 @@ public class Personagem {
         return stb.toString();
     }
 
-    public static Personagem customizar(Personagem persona) {
+    public static Personagem customizar() {
 
         String n, valor;
         byte vez = 0;
@@ -189,7 +189,7 @@ public class Personagem {
             }
         } while (vez < 3 || total != 100);
 
-        persona = new Personagem(n, atq, def, esq);
+        Personagem persona = new Personagem(n, atq, def, esq);
 
         return persona;
     }

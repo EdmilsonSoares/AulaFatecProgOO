@@ -12,7 +12,7 @@ public class Escrever {
 	private int sizeregistro = 50;
 	
 	public void fimArq(Registro reg) {
-		File file = new File("lista.txt");		
+		File file = new File("lista.txt");//caminho da lista		
 		try{
 			FileWriter fw = new FileWriter(file, true);//não passa daqui se houver erro
 			BufferedWriter bw = new BufferedWriter(fw);
