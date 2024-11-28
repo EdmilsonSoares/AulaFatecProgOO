@@ -1,0 +1,177 @@
+--Criando a classe Geometria, criar a classe chamada Geometria, que terá métodos para calcular áreas e perímetros de diferentes figuras geométricas.
+
+package com.geometria;
+
+public class Geometria {
+
+    // Método para calcular a área de um círculo
+    public double calcularAreaCirculo(double raio) {
+        return Math.PI * Math.pow(raio, 2);
+    }
+
+    // Método para calcular o perímetro de um círculo
+    public double calcularPerimetroCirculo(double raio) {
+        return 2 * Math.PI * raio;
+    }
+
+    // Método para calcular a área de um retângulo
+    public double calcularAreaRetangulo(double largura, double altura) {
+        return largura * altura;
+    }
+
+    // Método para calcular o perímetro de um retângulo
+    public double calcularPerimetroRetangulo(double largura, double altura) {
+        return 2 * (largura + altura);
+    }
+
+    // Método para calcular a área de um triângulo
+    public double calcularAreaTriangulo(double base, double altura) {
+        return (base * altura) / 2;
+    }
+
+    // Método para calcular o perímetro de um triângulo (assumindo um triângulo equilátero)
+    public double calcularPerimetroTriangulo(double lado) {
+        return 3 * lado;
+    }
+}
+
+--Criando o Servlet GeometriaServlet
+package com.geometria;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class GeometriaServlet extends HttpServlet {
+
+    // Processa o formulário e executa o cálculo da geometria
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String tipoCalculo = request.getParameter("tipoCalculo");
+        double resultado = 0.0;
+        String erro = null;
+
+        try {
+            // Pega os dados fornecidos pelo usuário
+            double valor1 = Double.parseDouble(request.getParameter("valor1"));
+            double valor2 = Double.parseDouble(request.getParameter("valor2", "0"));
+
+            Geometria geometria = new Geometria();
+
+            switch (tipoCalculo) {
+                case "areaCirculo":
+                    resultado = geometria.calcularAreaCirculo(valor1);
+                    break;
+                case "perimetroCirculo":
+                    resultado = geometria.calcularPerimetroCirculo(valor1);
+                    break;
+                case "areaRetangulo":
+                    resultado = geometria.calcularAreaRetangulo(valor1, valor2);
+                    break;
+                case "perimetroRetangulo":
+                    resultado = geometria.calcularPerimetroRetangulo(valor1, valor2);
+                    break;
+                case "areaTriangulo":
+                    resultado = geometria.calcularAreaTriangulo(valor1, valor2);
+                    break;
+                case "perimetroTriangulo":
+                    resultado = geometria.calcularPerimetroTriangulo(valor1);
+                    break;
+                default:
+                    erro = "Tipo de cálculo inválido!";
+            }
+
+        } catch (Exception e) {
+            erro = "Erro ao realizar o cálculo: " + e.getMessage();
+        }
+
+        request.setAttribute("resultado", resultado);
+        request.setAttribute("erro", erro);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    // Método para exibir a página inicial com o formulário
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
+    }
+}
+
+--Criando a página index.jsp
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Geométrica</title>
+</head>
+<body>
+    <h2>Calculadora Geométrica</h2>
+    <form action="geometria" method="post">
+        <label for="tipoCalculo">Escolha o Cálculo:</label>
+        <select name="tipoCalculo" id="tipoCalculo">
+            <option value="areaCirculo">Área do Círculo</option>
+            <option value="perimetroCirculo">Perímetro do Círculo</option>
+            <option value="areaRetangulo">Área do Retângulo</option>
+            <option value="perimetroRetangulo">Perímetro do Retângulo</option>
+            <option value="areaTriangulo">Área do Triângulo</option>
+            <option value="perimetroTriangulo">Perímetro do Triângulo</option>
+        </select><br><br>
+
+        <!-- Campo para o valor 1 -->
+        <label for="valor1">Valor 1:</label>
+        <input type="number" id="valor1" name="valor1" required><br><br>
+
+        <!-- Campo para o valor 2 (se necessário) -->
+        <label for="valor2">Valor 2 (opcional):</label>
+        <input type="number" id="valor2" name="valor2"><br><br>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    <h3>Resultado:</h3>
+    <p><c:if test="${not empty resultado}">${resultado}</c:if></p>
+    <p><c:if test="${not empty erro}"><span style="color: red;">${erro}</span></c:if></p>
+</body>
+</html>
+
+--Configuração do web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+    
+    <servlet>
+        <servlet-name>GeometriaServlet</servlet-name>
+        <servlet-class>com.geometria.GeometriaServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>GeometriaServlet</servlet-name>
+        <url-pattern>/geometria</url-pattern>
+    </servlet-mapping>
+    
+</web-app>
+
+--Estrutura do Projeto
+
+GeometriaWeb
+│
+├── src/
+│   ├── com/
+│   │   └── geometria/
+│   │       ├── Geometria.java
+│   │       └── GeometriaServlet.java
+│
+├── WebContent/
+│   └── WEB-INF/
+│       └── web.xml
+│   └── index.jsp
+│
+└── pom.xml (se usar Maven)
+
+--Como rodar
+Compile o projeto.
+Importe o projeto para o servidor de aplicações (como Apache Tomcat).
+Acesse a página index.jsp no navegador.
+Preencha os valores necessários, selecione o tipo de cálculo e clique em "Calcular".

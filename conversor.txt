@@ -1,0 +1,202 @@
+--criar uma classe chamada Conversor que terá métodos para realizar a conversão das unidades.
+
+package com.conversor;
+
+public class Conversor {
+
+    // Método para converter Celsius para Fahrenheit
+    public double celsiusParaFahrenheit(double celsius) {
+        return (celsius * 9/5) + 32;
+    }
+
+    // Método para converter Fahrenheit para Celsius
+    public double fahrenheitParaCelsius(double fahrenheit) {
+        return (fahrenheit - 32) * 5/9;
+    }
+
+    // Método para converter metros para quilômetros
+    public double metrosParaKilometros(double metros) {
+        return metros / 1000;
+    }
+
+    // Método para converter quilômetros para metros
+    public double kilometrosParaMetros(double kilometros) {
+        return kilometros * 1000;
+    }
+
+    // Método para converter metros para milhas
+    public double metrosParaMilhas(double metros) {
+        return metros / 1609.34;
+    }
+
+    // Método para converter libras para quilos
+    public double librasParaQuilos(double libras) {
+        return libras * 0.453592;
+    }
+
+    // Método para converter quilos para libras
+    public double quilosParaLibras(double quilos) {
+        return quilos / 0.453592;
+    }
+
+    // Método para converter gramas para quilos
+    public double gramasParaQuilos(double gramas) {
+        return gramas / 1000;
+    }
+
+    // Método para converter quilos para gramas
+    public double quilosParaGramas(double quilos) {
+        return quilos * 1000;
+    }
+}
+
+
+--Criando o Servlet ConversorServlet
+
+package com.conversor;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class ConversorServlet extends HttpServlet {
+
+    // Processa o formulário e executa a conversão
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String tipoConversao = request.getParameter("tipoConversao");
+        double resultado = 0.0;
+        String erro = null;
+
+        try {
+            double valorOriginal = Double.parseDouble(request.getParameter("valorOriginal"));
+            Conversor conversor = new Conversor();
+
+            switch (tipoConversao) {
+                case "celsiusParaFahrenheit":
+                    resultado = conversor.celsiusParaFahrenheit(valorOriginal);
+                    break;
+                case "fahrenheitParaCelsius":
+                    resultado = conversor.fahrenheitParaCelsius(valorOriginal);
+                    break;
+                case "metrosParaKilometros":
+                    resultado = conversor.metrosParaKilometros(valorOriginal);
+                    break;
+                case "kilometrosParaMetros":
+                    resultado = conversor.kilometrosParaMetros(valorOriginal);
+                    break;
+                case "metrosParaMilhas":
+                    resultado = conversor.metrosParaMilhas(valorOriginal);
+                    break;
+                case "librasParaQuilos":
+                    resultado = conversor.librasParaQuilos(valorOriginal);
+                    break;
+                case "quilosParaLibras":
+                    resultado = conversor.quilosParaLibras(valorOriginal);
+                    break;
+                case "gramasParaQuilos":
+                    resultado = conversor.gramasParaQuilos(valorOriginal);
+                    break;
+                case "quilosParaGramas":
+                    resultado = conversor.quilosParaGramas(valorOriginal);
+                    break;
+                default:
+                    erro = "Tipo de conversão inválido!";
+            }
+
+        } catch (Exception e) {
+            erro = "Erro ao realizar a conversão: " + e.getMessage();
+        }
+
+        request.setAttribute("resultado", resultado);
+        request.setAttribute("erro", erro);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    // Método para exibir a página inicial com o formulário
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
+    }
+}
+
+
+--Criando a página index.jsp
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Unidades</title>
+</head>
+<body>
+    <h2>Conversor de Unidades</h2>
+    <form action="conversor" method="post">
+        <label for="valorOriginal">Valor Original:</label>
+        <input type="text" id="valorOriginal" name="valorOriginal" required><br><br>
+
+        <label for="tipoConversao">Tipo de Conversão:</label>
+        <select name="tipoConversao" id="tipoConversao">
+            <option value="celsiusParaFahrenheit">Celsius para Fahrenheit</option>
+            <option value="fahrenheitParaCelsius">Fahrenheit para Celsius</option>
+            <option value="metrosParaKilometros">Metros para Quilômetros</option>
+            <option value="kilometrosParaMetros">Quilômetros para Metros</option>
+            <option value="metrosParaMilhas">Metros para Milhas</option>
+            <option value="librasParaQuilos">Libras para Quilos</option>
+            <option value="quilosParaLibras">Quilos para Libras</option>
+            <option value="gramasParaQuilos">Gramas para Quilos</option>
+            <option value="quilosParaGramas">Quilos para Gramas</option>
+        </select><br><br>
+
+        <button type="submit">Converter</button>
+    </form>
+
+    <h3>Resultado:</h3>
+    <p><c:if test="${not empty resultado}">${resultado}</c:if></p>
+    <p><c:if test="${not empty erro}"><span style="color: red;">${erro}</span></c:if></p>
+</body>
+</html>
+
+
+--Configuração do web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+    
+    <servlet>
+        <servlet-name>ConversorServlet</servlet-name>
+        <servlet-class>com.conversor.ConversorServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ConversorServlet</servlet-name>
+        <url-pattern>/conversor</url-pattern>
+    </servlet-mapping>
+    
+</web-app>
+
+-- Estrutura do Projeto
+
+ConversorWeb
+│
+├── src/
+│   ├── com/
+│   │   └── conversor/
+│   │       ├── Conversor.java
+│   │       └── ConversorServlet.java
+│
+├── WebContent/
+│   └── WEB-INF/
+│       └── web.xml
+│   └── index.jsp
+│
+└── pom.xml (se usar Maven)
+
+--Como rodar
+
+    Compile o projeto.
+    Importe o projeto para o servidor de aplicações (como Apache Tomcat).
+    Acesse a página index.jsp no navegador.
+    Preencha o valor e selecione o tipo de conversão.
+    Clique em "Converter" para ver o resultado.

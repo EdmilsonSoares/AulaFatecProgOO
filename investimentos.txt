@@ -1,0 +1,160 @@
+--criar uma classe chamada Investimento para calcular os resultados de diferentes operações financeiras.
+
+package com.investimento;
+
+public class Investimento {
+
+    // Método para calcular juros simples
+    public double calcularJurosSimples(double capitalInicial, double taxaJuros, int tempo) {
+        return capitalInicial * (1 + taxaJuros * tempo);
+    }
+
+    // Método para calcular juros compostos
+    public double calcularJurosCompostos(double capitalInicial, double taxaJuros, int tempo) {
+        return capitalInicial * Math.pow(1 + taxaJuros, tempo);
+    }
+
+    // Método para calcular valor futuro (simples ou compostos)
+    public double calcularValorFuturo(double capitalInicial, double taxaJuros, int tempo, boolean composto) {
+        if (composto) {
+            return calcularJurosCompostos(capitalInicial, taxaJuros, tempo);
+        } else {
+            return calcularJurosSimples(capitalInicial, taxaJuros, tempo);
+        }
+    }
+}
+
+
+--Criando o Servlet InvestimentoServlet:
+package com.investimento;
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class InvestimentoServlet extends HttpServlet {
+
+    // Processa o formulário e executa o cálculo do investimento
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String tipoCalculo = request.getParameter("tipoCalculo");
+        double resultado = 0.0;
+        String erro = null;
+
+        try {
+            double capitalInicial = Double.parseDouble(request.getParameter("capitalInicial"));
+            double taxaJuros = Double.parseDouble(request.getParameter("taxaJuros"));
+            int tempo = Integer.parseInt(request.getParameter("tempo"));
+            boolean composto = "composto".equals(tipoCalculo);
+
+            Investimento investimento = new Investimento();
+
+            switch (tipoCalculo) {
+                case "jurosSimples":
+                    resultado = investimento.calcularJurosSimples(capitalInicial, taxaJuros, tempo);
+                    break;
+                case "jurosCompostos":
+                    resultado = investimento.calcularJurosCompostos(capitalInicial, taxaJuros, tempo);
+                    break;
+                case "valorFuturo":
+                    resultado = investimento.calcularValorFuturo(capitalInicial, taxaJuros, tempo, composto);
+                    break;
+                default:
+                    erro = "Tipo de cálculo inválido!";
+            }
+
+        } catch (Exception e) {
+            erro = "Erro ao realizar o cálculo: " + e.getMessage();
+        }
+
+        request.setAttribute("resultado", resultado);
+        request.setAttribute("erro", erro);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    // Método para exibir a página inicial com o formulário
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
+    }
+}
+
+--criar a página JSP onde o usuário fornecerá as entradas (capital inicial, taxa de juros, tempo) e selecionará o tipo de cálculo (juros simples, juros compostos, valor futuro).
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Investimentos</title>
+</head>
+<body>
+    <h2>Calculadora de Investimentos</h2>
+    <form action="investimento" method="post">
+        <label for="capitalInicial">Capital Inicial:</label>
+        <input type="text" id="capitalInicial" name="capitalInicial" required><br><br>
+        
+        <label for="taxaJuros">Taxa de Juros (por período):</label>
+        <input type="text" id="taxaJuros" name="taxaJuros" required><br><br>
+
+        <label for="tempo">Tempo (em anos):</label>
+        <input type="number" id="tempo" name="tempo" required><br><br>
+
+        <label for="tipoCalculo">Tipo de Cálculo:</label>
+        <select name="tipoCalculo" id="tipoCalculo">
+            <option value="jurosSimples">Juros Simples</option>
+            <option value="jurosCompostos">Juros Compostos</option>
+            <option value="valorFuturo">Valor Futuro</option>
+        </select><br><br>
+
+        <label for="composto">Usar Juros Compostos para Valor Futuro:</label>
+        <input type="checkbox" id="composto" name="composto"><br><br>
+
+        <button type="submit">Calcular</button>
+    </form>
+
+    <h3>Resultado:</h3>
+    <p><c:if test="${not empty resultado}">${resultado}</c:if></p>
+    <p><c:if test="${not empty erro}"><span style="color: red;">${erro}</span></c:if></p>
+</body>
+</html>
+
+--Agora, mapeamos o servlet no arquivo web.xml para associar o caminho da URL ao servlet.
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+    
+    <servlet>
+        <servlet-name>InvestimentoServlet</servlet-name>
+        <servlet-class>com.investimento.InvestimentoServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>InvestimentoServlet</servlet-name>
+        <url-pattern>/investimento</url-pattern>
+    </servlet-mapping>
+    
+</web-app>
+
+
+--A estrutura do projeto será a seguinte:
+InvestimentoWeb
+│
+├── src/
+│   ├── com/
+│   │   └── investimento/
+│   │       ├── Investimento.java
+│   │       └── InvestimentoServlet.java
+│
+├── WebContent/
+│   └── WEB-INF/
+│       └── web.xml
+│   └── index.jsp
+│
+└── pom.xml (se usar Maven)
+
+--Como rodar
+
+    Compile o projeto.
+    Importe no seu servidor de aplicações (como Apache Tomcat).
+    Acesse a página index.jsp no navegador.
+    Preencha os campos, selecione o tipo de cálculo e clique em "Calcular".
